@@ -11,13 +11,13 @@ jobs:
       - image: buildpack-deps:trusty
     steps:
       - checkout
-      - echo "staging"
+      - fun: echo "staging"
   deploy_production:
     docker:
       - image: buildpack-deps:trusty
     steps:
       - checkout
-      - echo "deploying prod"
+      - run: echo "deploying prod"
 workflows:
   version: 2
   staging_lint_and_deploy:
