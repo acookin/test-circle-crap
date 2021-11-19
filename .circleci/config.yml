@@ -32,7 +32,13 @@ workflows:
               ignore: /^(?!pull\/).*$/
   production_lint_and_deploy:
     jobs:
-      - lint_check
+      - lint_check:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: production
+
       - deploy_production:
           requires:
             - lint_check
