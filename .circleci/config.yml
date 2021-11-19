@@ -6,7 +6,6 @@ jobs:
     steps:
       - checkout
       - run: echo "hi"
-      - run: notacommand
   deploy_staging:
     docker:
       - image: buildpack-deps:trusty
