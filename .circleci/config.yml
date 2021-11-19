@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  lint_check:
+    docker:
+      - image: circleci/node:12.13-browsers
+    steps:
+      - checkout
+      - run: echo "hi"
+  deploy_staging:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - echo "staging"
+  deploy_production:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - checkout
+      - echo "deploying prod"
+workflows:
+  version: 2
+  staging_lint_and_deploy:
+    jobs:
+      - lint_check
+      - deploy_staging:
+          requires:
+            - lint_check
+          filters:
+            branches:
+              only: master
+              ignore: /^(?!pull\/).*$/
+  production_lint_and_deploy:
+    jobs:
+      - lint_check
+      - deploy_production:
+          requires:
+            - lint_check
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: production
+
