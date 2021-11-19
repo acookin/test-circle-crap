@@ -34,8 +34,6 @@ workflows:
     jobs:
       - lint_check
       - deploy_production:
-          requires:
-            - lint_check
           filters:
             branches:
               ignore: /.*/
