@@ -17,7 +17,7 @@ jobs:
           create_annotated_tag: true
       - name: Create changelog
         run:
-          git log --pretty=oneline --abbrev-commit ${{ steps.tag_version.outputs.previous_tag }}...${{ steps.tag_version.outputs.new_tag }} > changelog
+          git log --pretty=oneline --abbrev-commit ${{ steps.tag_version.outputs.previous_tag }}...HEAD > changelog
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
