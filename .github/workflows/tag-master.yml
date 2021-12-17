@@ -15,3 +15,12 @@ jobs:
           github_token: ${{ secrets.GIT_TOKEN }}
           default_bump: patch
           create_annotated_tag: true
+      - name: Create changelog
+        run:
+          git log --pretty=oneline --abbrev-commit ${{ steps.tag_version.outputs.previous_tag }}...${{ steps.tag_version.outputs.new_tag }} > changelog
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          bodyFile: changelog
