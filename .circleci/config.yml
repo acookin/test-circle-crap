@@ -21,6 +21,8 @@ jobs:
             SKIP_MIGRATIONS: "true"
           name: checkoutversion
           command: |
+            echo "CIRCLE BRANCH"
+            echo $CIRCLE_BRANCH
             prev_version=`git describe --abbrev=0 --tags $(git describe --tags --abbrev=0)^`
             git checkout ${prev_version}
             git describe --tags
