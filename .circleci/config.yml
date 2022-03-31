@@ -23,6 +23,11 @@ jobs:
           command: |
             echo "CIRCLE BRANCH"
             echo $CIRCLE_BRANCH
+            if [[ -z "$CIRCLE_BRANCH" ]] ; then
+              echo "SUP"
+            else
+              echo "YO"
+            fi
             prev_version=`git describe --abbrev=0 --tags $(git describe --tags --abbrev=0)^`
             git checkout ${prev_version}
             git describe --tags
