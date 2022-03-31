@@ -15,7 +15,7 @@ jobs:
       - run:
           name: desk
           command: |
-            git describe
+            git describe --tags
       - run:
           environment:
             SKIP_MIGRATIONS: "true"
@@ -23,7 +23,7 @@ jobs:
           command: |
             prev_version=`git describe --abbrev=0 --tags $(git describe --tags --abbrev=0)^`
             git checkout ${prev_version}
-            git describe
+            git describe --tags
   lint_check:
     docker:
       - image: circleci/node:12.13-browsers
