@@ -1,62 +1,25 @@
-version: 2
+version: 2.1
 jobs:
-  compattest:
+  dummy:
     docker:
-      - image: circleci/python:3.8.10-buster
-      - image: postgres:11.12
-        environment:
-          POSTGRES_DB: octave_test
-          POSTGRES_USER: octave_web
-          POSTGRES_PASSWORD: octave_web
+      - image: cimg/base:2024.06
 
     working_directory: ~/repo
     steps:
-      - checkout
       - run:
-          name: desk
-          command: |
-            git describe --tags
-      - run:
-          environment:
-            SKIP_MIGRATIONS: "true"
-          name: checkoutversion
-          command: |
-            echo "CIRCLE BRANCH"
-            echo $CIRCLE_BRANCH
-            if [[ -z "$CIRCLE_BRANCH" ]] ; then
-              echo "SUP"
-            else
-              echo "YO"
-            fi
-            prev_version=`git describe --abbrev=0 --tags $(git describe --tags --abbrev=0)^`
-            git checkout ${prev_version}
-            git describe --tags
-  lint_check:
-    docker:
-      - image: circleci/node:12.13-browsers
-    steps:
-      - checkout
-      - run: echo "hi"
-  deploy_staging:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
-      - run: echo "staging"
-  deploy_production:
-    docker:
-      - image: buildpack-deps:trusty
-    steps:
-      - checkout
-      - run: echo "deploying prod"
+          name: empty
+          command: echo "hi"
 workflows:
-  version: 2
-  production_lint_and_deploy:
+  mycoolthing:
     jobs:
-
-      - compattest:
+      - dummy:
+          filters:
+            tags:
+              only: /.*/
+      - dummy:
+          name: my-cool-deploy
           filters:
             branches:
               ignore: /.*/
             tags:
-              only: /v[\d]{12}/
+              only: /.*/
